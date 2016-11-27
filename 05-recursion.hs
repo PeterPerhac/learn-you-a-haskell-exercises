@@ -26,7 +26,7 @@ fib n = ((head fibs) + (head $ tail fibs)) : fibs
 --			    stepReverseSign -3 1 = 4
 --			    stepReverseSign 1 2 = -3
 stepReverseSign :: (Fractional a, Ord a) => a -> a -> a
-stepReverseSign a b = (negate $ signum a) * (abs a + b)
+stepReverseSign a | a < 0 = (+) (abs a) | otherwise = (-) (-a)
 
 {-| Lets calculate pi.
  - The Leibniz formula for pi (http://en.wikipedia.org/wiki/Leibniz_formula_for_%CF%80)
@@ -60,10 +60,10 @@ stepReverseSign a b = (negate $ signum a) * (abs a + b)
  -}
 
 piCalc :: (Fractional a, Integral b, Ord a) => a -> (a, b)
-piCalc a = piCalc' 1 4 a 0
+piCalc a = piCalc' 1 0 a 0
 
 piCalc' :: (Ord a, Fractional a, Integral b) => a -> a -> a -> b -> (a, b)
 piCalc' w x y z
-    | abs (x - (realToFrac pi)) < y = (x, z)
-    | otherwise = piCalc' (w+2) ((stepReverseSign x (4/w))) y (z+1)
+    | 4 / w < y = (x, z)
+    | otherwise = piCalc' (w+2) (stepReverseSign (4/w) x) y (z+1)
 
