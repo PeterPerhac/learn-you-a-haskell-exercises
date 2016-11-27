@@ -38,7 +38,8 @@ hoSumInts = (\a b -> higherOrderSum id a b) where id = (\x -> x)
 --  - A function to apply between each value, f :: Int -> Int -> Int
 --  - A value to return in the base case when a > b, z :: Int
 higherOrderSequenceApplication :: (Int -> Int) -> (Int -> Int -> Int) -> Int -> Int -> Int -> Int
-higherOrderSequenceApplication op f a b z | a > b = z | otherwise op $ map f [a..b]
+higherOrderSequenceApplication op f a b z | a > b = z | otherwise = foldl f z $ map op [a..b]
+
 -- Define a factorial method using the higherOrderSequenceApplication
 hoFactorial :: Int -> Int
-hoFactorial = undefined
+hoFactorial n = higherOrderSequenceApplication (+0) (*) 1 n 1
