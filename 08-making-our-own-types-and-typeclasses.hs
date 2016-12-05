@@ -1,3 +1,4 @@
+import Data.List (isInfixOf)
 {-
  - We are going to create some types for a deck of cards
  - The cards need to have an ordering, based on the standard ranking http://en.wikipedia.org/wiki/Standard_52-card_deck#Rank_and_color
@@ -36,10 +37,15 @@ instance Hand Card where
     play c = (Card Ace Spades) `elem` c
 
 -- Create a new Coin type
-data Coin =  Heads | Tails deriving (Eq)
+data Coin =  Heads | Tails deriving (Show, Read, Eq)
 
 -- Implement Hand for Coin, where play returns true if there are ten heads in a row in the list
 instance Hand Coin where
-    play c = length c == 10 && all (== Heads) c
+    play c = replicate 10 Heads `isInfixOf` c
 
--- Have a play with implementing Hand for some other types, for instance Int and Bool
+throwCoins :: [(Int, Coin)] -> [Coin]
+throwCoins [] = []
+throwCoins ((i,c):tail) = replicate i c ++ throwCoins tail
+
+-- play $ throwCoins [(2, Tails), (10, Heads), (1, Tails)]
+-- Peter Perhac, 5th December 2016
