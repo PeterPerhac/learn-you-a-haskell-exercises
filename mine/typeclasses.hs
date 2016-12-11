@@ -33,5 +33,6 @@ instance YesNo (Maybe a) where
 yesnoIf :: (YesNo y) => y -> a -> a -> a  
 yesnoIf yesnoVal yesResult noResult = if yesno yesnoVal then yesResult else noResult  
 
-data Color = Red | Green | Blue deriving (Enum, Ord, Eq, Bounded, YesNo)
+-- the YesNo typeclass is not derivable so the below will not work:
+-- data Color = Red | Green | Blue deriving (Enum, Ord, Eq, Bounded, YesNo)
 

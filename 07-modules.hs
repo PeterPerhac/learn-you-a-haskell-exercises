@@ -7,7 +7,7 @@ import DistanceConversions
 -- Example areaConv inchesToCentimetres 9 = 58.0644
 
 areaConv :: (Float -> Float) -> Float -> Float
-areaConv linearConversion scalar = (*) (linearConversion 1 ** 2) scalar
+areaConv linearConversion scalar = (linearConversion 1 ** 2) * scalar
 
 -- define a function for converting square inches into square centimetres
 sqInToSqCm :: Float -> Float
